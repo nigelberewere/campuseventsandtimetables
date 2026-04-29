@@ -113,13 +113,6 @@ class AppDrawer extends StatelessWidget {
             currentRoute: currentRoute,
             context: context,
           ),
-          _buildDrawerItem(
-            icon: Icons.explore_rounded,
-            title: 'Landing',
-            route: landingRoute,
-            currentRoute: currentRoute,
-            context: context,
-          ),
           const Spacer(),
           const Divider(
             color: AppColors.dividerGray,
