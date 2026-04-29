@@ -5,6 +5,7 @@ import 'pages/home.dart';
 import 'pages/login.dart';
 import 'pages/signup.dart';
 import 'pages/timetables.dart';
+import 'pages/addClass.dart';
 
 const String loginRoute = '/login';
 const String signupRoute = '/signup';
@@ -12,6 +13,7 @@ const String homeRoute = '/home';
 const String eventsRoute = '/events';
 const String landingRoute = '/landing';
 const String timetablesRoute = '/timetables';
+const String addClassRoute = '/addClass';
 const String notificationsRoute = '/notifications';
 const String profileRoute = '/profile';
 const String adminRoute = '/admin';
@@ -58,6 +60,8 @@ class CampusEventsApp extends StatelessWidget {
             return MaterialPageRoute(builder: (_) => const LandingPage());
           case timetablesRoute:
             return MaterialPageRoute(builder: (_) => const TimetablesPage());
+          case addClassRoute:
+            return MaterialPageRoute(builder: (_) => const AddClassPage());
           case notificationsRoute:
             return MaterialPageRoute(
               builder: (_) => const _PlaceholderPage(
