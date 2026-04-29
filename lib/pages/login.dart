@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'events.dart';
 import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
@@ -195,9 +194,7 @@ class _LoginPageState extends State<LoginPage> {
 																	FilledButton(
 																		onPressed: () {
 																			if (_formKey.currentState?.validate() ?? false) {
-																			Navigator.of(context).pushReplacement(
-																				MaterialPageRoute(builder: (_) => const EventsPage()),
-																			);
+																				Navigator.of(context).pushReplacementNamed('/home');
 																			}
 																		},
 																		style: FilledButton.styleFrom(
@@ -217,7 +214,7 @@ class _LoginPageState extends State<LoginPage> {
 																	OutlinedButton(
 																		onPressed: () {
 																		Navigator.of(context).push(
-																			MaterialPageRoute(builder: (_) => SignupPage()),
+																			MaterialPageRoute(builder: (_) => const SignupPage()),
 																		);
 																	},
 																		style: OutlinedButton.styleFrom(
