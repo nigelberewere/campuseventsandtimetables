@@ -298,11 +298,7 @@ class _TimetablesPageState extends State<TimetablesPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Add class functionality coming soon!'),
-            ),
-          );
+          Navigator.pushNamed(context, '/addClass');
         },
         backgroundColor: AppColors.blueMirage,
         child: const Icon(Icons.add, color: AppColors.white),
