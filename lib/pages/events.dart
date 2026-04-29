@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import 'addEvent.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -201,12 +202,21 @@ class _EventsPageState extends State<EventsPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Add event functionality coming soon!'),
-            ),
+        onPressed: () async {
+          final newEvent = await Navigator.push<Map<String, dynamic>>(
+            context,
+            MaterialPageRoute(builder: (context) => const AddEventPage()),
           );
+          if (newEvent != null && mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Event "${newEvent['title']}" created successfully!',
+                ),
+                duration: const Duration(seconds: 2),
+              ),
+            );
+          }
         },
         backgroundColor: AppColors.blueMirage,
         child: const Icon(Icons.add, color: AppColors.white),
