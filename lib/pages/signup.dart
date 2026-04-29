@@ -47,12 +47,12 @@ class _SignupPageState extends State<SignupPage> {
                   child: Container(
                     padding: const EdgeInsets.all(22),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.66),
+                      color: Colors.white.withValues(alpha: 0.66),
                       borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: Colors.white.withOpacity(0.82)),
+                      border: Border.all(color: Colors.white.withValues(alpha: 0.82)),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF8B6B50).withOpacity(0.12),
+                          color: const Color(0xFF8B6B50).withValues(alpha: 0.12),
                           blurRadius: 36,
                           offset: const Offset(0, 18),
                         ),
@@ -61,6 +61,14 @@ class _SignupPageState extends State<SignupPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        IconButton(
+                          onPressed: () => Navigator.of(context).maybePop(),
+                          icon: const Icon(Icons.arrow_back_rounded),
+                          color: fallbackBlueMirage,
+                          padding: EdgeInsets.zero,
+                          alignment: Alignment.centerLeft,
+                        ),
+                        const SizedBox(height: 8),
                         Row(
                           children: [
                             Container(
@@ -108,7 +116,7 @@ class _SignupPageState extends State<SignupPage> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                           decoration: BoxDecoration(
-                            color: amberSmoke.withOpacity(0.55),
+                            color: amberSmoke.withValues(alpha: 0.55),
                             borderRadius: BorderRadius.circular(18),
                           ),
                           child: const Row(
@@ -327,7 +335,7 @@ class _SignupBackdrop extends StatelessWidget {
             right: -30,
             child: _AtmosphericOrb(
               size: 210,
-              colors: [blueMirage.withOpacity(0.45), blueMirage.withOpacity(0.04)],
+              colors: [blueMirage.withValues(alpha: 0.45), blueMirage.withValues(alpha: 0.04)],
             ),
           ),
           Positioned(
@@ -335,7 +343,7 @@ class _SignupBackdrop extends StatelessWidget {
             left: -40,
             child: _AtmosphericOrb(
               size: 230,
-              colors: [amberSmoke.withOpacity(0.70), amberSmoke.withOpacity(0.10)],
+              colors: [amberSmoke.withValues(alpha: 0.70), amberSmoke.withValues(alpha: 0.10)],
             ),
           ),
           Positioned(
@@ -343,7 +351,7 @@ class _SignupBackdrop extends StatelessWidget {
             left: 28,
             child: _AtmosphericOrb(
               size: 120,
-              colors: [fallbackBlueMirage.withOpacity(0.22), fallbackBlueMirage.withOpacity(0.03)],
+              colors: [fallbackBlueMirage.withValues(alpha: 0.22), fallbackBlueMirage.withValues(alpha: 0.03)],
             ),
           ),
         ],

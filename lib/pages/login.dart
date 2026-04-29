@@ -43,12 +43,12 @@ class _LoginPageState extends State<LoginPage> {
 											Container(
 												padding: const EdgeInsets.all(22),
 												decoration: BoxDecoration(
-													color: Colors.white.withOpacity(0.64),
+													color: Colors.white.withValues(alpha: 0.64),
 													borderRadius: BorderRadius.circular(30),
-													border: Border.all(color: Colors.white.withOpacity(0.8)),
+													border: Border.all(color: Colors.white.withValues(alpha: 0.8)),
 													boxShadow: [
 														BoxShadow(
-															color: const Color(0xFF8B6B50).withOpacity(0.12),
+															color: const Color(0xFF8B6B50).withValues(alpha: 0.12),
 															blurRadius: 36,
 															offset: const Offset(0, 18),
 														),
@@ -57,6 +57,14 @@ class _LoginPageState extends State<LoginPage> {
 												child: Column(
 													crossAxisAlignment: CrossAxisAlignment.start,
 													children: [
+														IconButton(
+															onPressed: () => Navigator.of(context).maybePop(),
+															icon: const Icon(Icons.arrow_back_rounded),
+															color: fallbackBlueMirage,
+															padding: EdgeInsets.zero,
+															alignment: Alignment.centerLeft,
+														),
+														const SizedBox(height: 8),
 														Row(
 															children: [
 																Container(
@@ -78,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
 																		crossAxisAlignment: CrossAxisAlignment.start,
 																		children: const [
 																			Text(
-																				'campuseventsandtimetables',
+																				'Campus Events and Timetables',
 																				style: TextStyle(
 																					fontSize: 18,
 																					fontWeight: FontWeight.w800,
@@ -88,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
 																			),
 																			SizedBox(height: 4),
 																			Text(
-																				'Sign in to manage campus events and schedules',
+																				'Sign in to manage campus events and timetables',
 																				style: TextStyle(
 																					fontSize: 12.5,
 																					height: 1.3,
@@ -104,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
 														Container(
 															padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
 															decoration: BoxDecoration(
-																color: amberSmoke.withOpacity(0.55),
+																color: amberSmoke.withValues(alpha: 0.55),
 																borderRadius: BorderRadius.circular(18),
 															),
 															child: const Row(
@@ -239,9 +247,9 @@ class _LoginPageState extends State<LoginPage> {
 											const SizedBox(height: 18),
 											Center(
 												child: Text(
-													'Design: Material',
+													'',
 													style: TextStyle(
-														color: fallbackBlueMirage.withOpacity(0.75),
+														color: fallbackBlueMirage.withValues(alpha: 0.75),
 														fontWeight: FontWeight.w600,
 														letterSpacing: 0.6,
 													),
@@ -283,7 +291,7 @@ class _LoginBackdrop extends StatelessWidget {
 						left: -30,
 						child: _AtmosphericOrb(
 							size: 180,
-							colors: [amberSmoke.withOpacity(0.72), amberSmoke.withOpacity(0.12)],
+												colors: [amberSmoke.withValues(alpha: 0.72), amberSmoke.withValues(alpha: 0.12)],
 						),
 					),
 					Positioned(
@@ -291,7 +299,7 @@ class _LoginBackdrop extends StatelessWidget {
 						right: -50,
 						child: _AtmosphericOrb(
 							size: 220,
-							colors: [blueMirage.withOpacity(0.55), blueMirage.withOpacity(0.04)],
+												colors: [blueMirage.withValues(alpha: 0.55), blueMirage.withValues(alpha: 0.04)],
 						),
 					),
 					Positioned(
@@ -299,14 +307,14 @@ class _LoginBackdrop extends StatelessWidget {
 						left: 40,
 						child: _AtmosphericOrb(
 							size: 240,
-							colors: [fallbackBlueMirage.withOpacity(0.34), fallbackBlueMirage.withOpacity(0.03)],
+												colors: [fallbackBlueMirage.withValues(alpha: 0.34), fallbackBlueMirage.withValues(alpha: 0.03)],
 						),
 					),
 					Positioned.fill(
 						child: CustomPaint(
 							painter: _LoginPatternPainter(
-								lineColor: fallbackBlueMirage.withOpacity(0.08),
-								dotColor: amberSmoke.withOpacity(0.16),
+													lineColor: fallbackBlueMirage.withValues(alpha: 0.08),
+													dotColor: amberSmoke.withValues(alpha: 0.16),
 							),
 						),
 					),

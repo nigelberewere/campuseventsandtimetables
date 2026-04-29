@@ -9,7 +9,6 @@ import 'pages/profile.dart';
 import 'pages/signup.dart';
 import 'pages/timetables.dart';
 import 'pages/addClass.dart';
-import 'pages/admin.dart';
 
 const String loginRoute = '/login';
 const String signupRoute = '/signup';
