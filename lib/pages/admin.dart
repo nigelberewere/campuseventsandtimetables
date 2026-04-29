@@ -92,7 +92,7 @@ class AdminPage extends StatelessWidget {
                     context,
                     'Add New Class',
                     'Schedule a new course session',
-                    Icons.calendar_add_on,
+                    Icons.calendar_today,
                     AppColors.amberSmoke,
                     () => Navigator.pushNamed(context, '/addClass'),
                   ),
@@ -181,10 +181,7 @@ class AdminPage extends StatelessWidget {
           ),
           Text(
             label,
-            style: const TextStyle(
-              color: AppColors.white70,
-              fontSize: 10,
-            ),
+            style: const TextStyle(color: Colors.white70, fontSize: 10),
           ),
         ],
       ),
@@ -242,10 +239,7 @@ class AdminPage extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     subtitle,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                 ],
               ),
@@ -270,7 +264,10 @@ class AdminPage extends StatelessWidget {
               children: [
                 Text(
                   activity,
-                  style: const TextStyle(fontSize: 14, color: AppColors.darkGray),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.darkGray,
+                  ),
                 ),
                 Text(
                   time,
