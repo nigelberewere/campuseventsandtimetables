@@ -7,6 +7,7 @@ import 'pages/profile.dart';
 import 'pages/signup.dart';
 import 'pages/timetables.dart';
 import 'pages/addClass.dart';
+import 'pages/admin.dart';
 
 const String loginRoute = '/login';
 const String signupRoute = '/signup';
@@ -74,13 +75,7 @@ class CampusEventsApp extends StatelessWidget {
           case profileRoute:
             return MaterialPageRoute(builder: (_) => const ProfilePage());
           case adminRoute:
-            return MaterialPageRoute(
-              builder: (_) => const _PlaceholderPage(
-                title: 'Admin',
-                message:
-                    'Admin page wiring is in place. Build this screen when ready.',
-              ),
-            );
+            return MaterialPageRoute(builder: (_) => const AdminPage());
           default:
             return MaterialPageRoute(builder: (_) => const LoginPage());
         }
