@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'events.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -265,9 +264,7 @@ class _SignupPageState extends State<SignupPage> {
                                     );
                                     return;
                                   }
-                                  Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(builder: (_) => const EventsPage()),
-                                  );
+                                  Navigator.of(context).pushReplacementNamed('/home');
                                 },
                                 style: FilledButton.styleFrom(
                                   minimumSize: const Size.fromHeight(54),
