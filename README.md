@@ -1,17 +1,18 @@
 # campuseventsandtimetables
 
-A new Flutter project.
+Group 2
+
+
+Our Campus Events And Timetables Application.
 
 Instructions for ALL:
-
+Create a new branch → work → commit → PR → merge
+dont work on the main!!!
 
 
 ## Getting Started
 
-
-
-
-
+Design: Material 
 
 Our theme colours:
 Amber smoke: HEX #F2E0D0
