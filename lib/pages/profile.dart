@@ -123,25 +123,25 @@ class _ProfilePageState extends State<ProfilePage> {
                   _buildInfoCard(
                     icon: Icons.email_rounded,
                     label: 'Email',
-                    value: 'nigel.berewere@university.edu',
+                    value: 'n024212345@nust.students.ac.zw',
                   ),
                   const SizedBox(height: 12),
                   _buildInfoCard(
                     icon: Icons.phone_rounded,
                     label: 'Phone',
-                    value: '+234 (0) 700 000 0000',
+                    value: '+263 700 000 000',
                   ),
                   const SizedBox(height: 12),
                   _buildInfoCard(
                     icon: Icons.location_city_rounded,
                     label: 'Department',
-                    value: 'Faculty of Science - Computer Science',
+                    value: 'Faculty of Applied Science - Computer Science',
                   ),
                   const SizedBox(height: 12),
                   _buildInfoCard(
                     icon: Icons.calendar_today_rounded,
                     label: 'Year',
-                    value: '3rd Year (2024/2025)',
+                    value: '2nd Year (2025/2026)',
                   ),
                   const SizedBox(height: 24),
                   Text(

@@ -4,10 +4,13 @@ import 'pages/admin.dart';
 import 'pages/events.dart';
 import 'pages/home.dart';
 import 'pages/login.dart';
+import 'pages/manage_notifications.dart';
+import 'pages/manage_users.dart';
 import 'pages/notifications.dart';
 import 'pages/profile.dart';
 import 'pages/signup.dart';
 import 'pages/timetables.dart';
+import 'pages/addEvent.dart';
 import 'pages/addClass.dart';
 
 const String loginRoute = '/login';
@@ -16,8 +19,11 @@ const String homeRoute = '/home';
 const String eventsRoute = '/events';
 const String landingRoute = '/landing';
 const String timetablesRoute = '/timetables';
+const String addEventRoute = '/addEvent';
 const String addClassRoute = '/addClass';
 const String notificationsRoute = '/notifications';
+const String manageNotificationsRoute = '/manageNotifications';
+const String manageUsersRoute = '/manageUsers';
 const String profileRoute = '/profile';
 const String adminRoute = '/admin';
 
@@ -63,10 +69,18 @@ class CampusEventsApp extends StatelessWidget {
             return MaterialPageRoute(builder: (_) => const LandingPage());
           case timetablesRoute:
             return MaterialPageRoute(builder: (_) => const TimetablesPage());
+          case addEventRoute:
+            return MaterialPageRoute(builder: (_) => const AddEventPage());
           case addClassRoute:
             return MaterialPageRoute(builder: (_) => const AddClassPage());
           case notificationsRoute:
             return MaterialPageRoute(builder: (_) => const NotificationsPage());
+          case manageNotificationsRoute:
+            return MaterialPageRoute(
+              builder: (_) => const ManageNotificationsPage(),
+            );
+          case manageUsersRoute:
+            return MaterialPageRoute(builder: (_) => const ManageUsersPage());
           case profileRoute:
             return MaterialPageRoute(builder: (_) => const ProfilePage());
           case adminRoute:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import '../main.dart';
 
 class AdminPage extends StatelessWidget {
   const AdminPage({super.key});
@@ -85,7 +86,7 @@ class AdminPage extends StatelessWidget {
                     'Create a new campus-wide event',
                     Icons.add_circle_outline,
                     AppColors.blueMirage,
-                    () => Navigator.pushNamed(context, '/addEvent'),
+                    () => Navigator.pushNamed(context, addEventRoute),
                   ),
                   const SizedBox(height: 12),
                   _buildAdminAction(
@@ -94,7 +95,7 @@ class AdminPage extends StatelessWidget {
                     'Schedule a new course session',
                     Icons.calendar_today,
                     AppColors.amberSmoke,
-                    () => Navigator.pushNamed(context, '/addClass'),
+                    () => Navigator.pushNamed(context, addClassRoute),
                   ),
                   const SizedBox(height: 12),
                   _buildAdminAction(
@@ -103,7 +104,7 @@ class AdminPage extends StatelessWidget {
                     'Send announcements to students',
                     Icons.campaign,
                     Colors.orangeAccent,
-                    () {},
+                    () => Navigator.pushNamed(context, manageNotificationsRoute),
                   ),
                   const SizedBox(height: 12),
                   _buildAdminAction(
@@ -112,7 +113,7 @@ class AdminPage extends StatelessWidget {
                     'View and manage student accounts',
                     Icons.manage_accounts,
                     Colors.teal,
-                    () {},
+                    () => Navigator.pushNamed(context, manageUsersRoute),
                   ),
                 ],
               ),
