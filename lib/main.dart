@@ -4,6 +4,7 @@ import 'pages/events.dart';
 import 'pages/home.dart';
 import 'pages/login.dart';
 import 'pages/signup.dart';
+import 'pages/timetables.dart';
 
 const String loginRoute = '/login';
 const String signupRoute = '/signup';
@@ -56,13 +57,7 @@ class CampusEventsApp extends StatelessWidget {
           case landingRoute:
             return MaterialPageRoute(builder: (_) => const LandingPage());
           case timetablesRoute:
-            return MaterialPageRoute(
-              builder: (_) => const _PlaceholderPage(
-                title: 'Timetable',
-                message:
-                    'Timetable page wiring is in place. Build this screen when ready.',
-              ),
-            );
+            return MaterialPageRoute(builder: (_) => const TimetablesPage());
           case notificationsRoute:
             return MaterialPageRoute(
               builder: (_) => const _PlaceholderPage(
