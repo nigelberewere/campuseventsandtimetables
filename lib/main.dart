@@ -21,21 +21,22 @@ void main() {
 class CampusEventsApp extends StatelessWidget {
   const CampusEventsApp({super.key});
 
-    @override
-    Widget build(BuildContext context) {
-      const amberSmoke = Color(0xFFF2E0D0);
-      const blueMirage = Color(0xFF5E88B0);
-      const fallbackBlueMirage = Color(0xFF5C6D7C);
+  @override
+  Widget build(BuildContext context) {
+    const amberSmoke = Color(0xFFF2E0D0);
+    const blueMirage = Color(0xFF5E88B0);
+    const fallbackBlueMirage = Color(0xFF5C6D7C);
 
-      final colorScheme = ColorScheme.fromSeed(
-        seedColor: blueMirage,
-        brightness: Brightness.light,
-      ).copyWith(
-        primary: blueMirage,
-        secondary: fallbackBlueMirage,
-        tertiary: amberSmoke,
-        surface: const Color(0xFFFFFBF6),
-      );
+    final colorScheme =
+        ColorScheme.fromSeed(
+          seedColor: blueMirage,
+          brightness: Brightness.light,
+        ).copyWith(
+          primary: blueMirage,
+          secondary: fallbackBlueMirage,
+          tertiary: amberSmoke,
+          surface: const Color(0xFFFFFBF6),
+        );
 
       return MaterialApp(
         debugShowCheckedModeBanner: false,
