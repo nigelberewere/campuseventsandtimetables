@@ -102,7 +102,10 @@ class _EventsPageState extends State<EventsPage> {
             itemBuilder: (context) => const [
               PopupMenuItem(value: '/home', child: Text('Home')),
               PopupMenuItem(value: '/timetables', child: Text('Timetable')),
-              PopupMenuItem(value: '/notifications', child: Text('Notifications')),
+              PopupMenuItem(
+                value: '/notifications',
+                child: Text('Notifications'),
+              ),
               PopupMenuItem(value: '/profile', child: Text('Profile')),
               PopupMenuItem(value: '/admin', child: Text('Admin')),
               PopupMenuItem(value: '/landing', child: Text('Landing')),
@@ -153,14 +156,26 @@ class _EventsPageState extends State<EventsPage> {
                               _selectedFilter = filter;
                             });
                           },
-                          backgroundColor: AppColors.white.withValues(alpha: 0.2),
+                          backgroundColor: _selectedFilter == filter
+                              ? AppColors.amberSmoke
+                              : AppColors.white.withValues(alpha: 0.8),
                           selectedColor: AppColors.amberSmoke,
                           checkmarkColor: AppColors.blueMirage,
+                          side: BorderSide(
+                            color: _selectedFilter == filter
+                                ? AppColors.amberSmoke
+                                : AppColors.white.withValues(alpha: 0.6),
+                            width: 1.5,
+                          ),
                           labelStyle: TextStyle(
                             color: _selectedFilter == filter
                                 ? AppColors.blueMirage
-                                : AppColors.white,
-                            fontWeight: FontWeight.w500,
+                                : AppColors.blueMirage,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
                           ),
                         ),
                       );
