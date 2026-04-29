@@ -63,7 +63,7 @@ class LandingPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 14),
                     Text(
-                      'A simple place to sign in, create an account, and keep up with campus life.',
+                      'Campus is a simple place. It will definitely make you think different.',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: AppColors.amberSmoke,
@@ -106,7 +106,7 @@ class LandingPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'Use the drawer after signing in to move between Home, Events, Timetable, Notifications, and Profile.',
+                      'Experience campus life at your fingertips. Log in or sign up to explore events, manage your timetable, and stay connected with everything happening around you.',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.white.withValues(alpha: 0.9),
