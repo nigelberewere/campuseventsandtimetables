@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'events.dart';
+import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
 	const LoginPage({super.key});
@@ -193,11 +195,9 @@ class _LoginPageState extends State<LoginPage> {
 																	FilledButton(
 																		onPressed: () {
 																			if (_formKey.currentState?.validate() ?? false) {
-																				ScaffoldMessenger.of(context).showSnackBar(
-																					const SnackBar(
-																						content: Text('Login submitted. Connect this to your auth flow.'),
-																					),
-																				);
+																			Navigator.of(context).pushReplacement(
+																				MaterialPageRoute(builder: (_) => const EventsPage()),
+																			);
 																			}
 																		},
 																		style: FilledButton.styleFrom(
@@ -215,7 +215,11 @@ class _LoginPageState extends State<LoginPage> {
 																	),
 																	const SizedBox(height: 18),
 																	OutlinedButton(
-																		onPressed: () {},
+																		onPressed: () {
+																		Navigator.of(context).push(
+																			MaterialPageRoute(builder: (_) => SignupPage()),
+																		);
+																	},
 																		style: OutlinedButton.styleFrom(
 																			minimumSize: const Size.fromHeight(54),
 																			foregroundColor: fallbackBlueMirage,

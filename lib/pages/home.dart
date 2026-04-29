@@ -9,8 +9,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +24,20 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppColors.blueMirage,
         elevation: 0,
         centerTitle: true,
+        actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert, color: AppColors.white),
+            onSelected: (value) => _openRoute(context, value),
+            itemBuilder: (context) => const [
+              PopupMenuItem(value: '/events', child: Text('Events')),
+              PopupMenuItem(value: '/timetables', child: Text('Timetable')),
+              PopupMenuItem(value: '/notifications', child: Text('Notifications')),
+              PopupMenuItem(value: '/profile', child: Text('Profile')),
+              PopupMenuItem(value: '/admin', child: Text('Admin')),
+              PopupMenuItem(value: '/landing', child: Text('Landing')),
+            ],
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -238,7 +250,7 @@ class _HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.3),
+              color: color.withValues(alpha: 0.3),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -277,7 +289,7 @@ class _HomePageState extends State<HomePage> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -480,17 +492,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _navigateToSection(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    Navigator.of(context).pushNamed(index == 0 ? '/events' : '/timetables');
+  }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          _selectedIndex == 0 ? 'Navigate to Events' : 'Navigate to Timetable',
-        ),
-        duration: const Duration(seconds: 1),
-      ),
-    );
+  void _openRoute(BuildContext context, String routeName) {
+    Navigator.of(context).pushNamed(routeName);
   }
 }

@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
-import 'pages/login.dart';
-import 'constants/app_colors.dart';
+import 'pages/events.dart';
 import 'pages/home.dart';
+import 'pages/login.dart';
+import 'pages/signup.dart';
+
+const String loginRoute = '/login';
+const String signupRoute = '/signup';
+const String homeRoute = '/home';
+const String eventsRoute = '/events';
+const String landingRoute = '/landing';
+const String timetablesRoute = '/timetables';
+const String notificationsRoute = '/notifications';
+const String profileRoute = '/profile';
+const String adminRoute = '/admin';
 
 void main() {
   runApp(const CampusEventsApp());
@@ -29,6 +40,56 @@ class CampusEventsApp extends StatelessWidget {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'campuseventsandtimetables',
+        initialRoute: loginRoute,
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case loginRoute:
+              return MaterialPageRoute(builder: (_) => const LoginPage());
+            case signupRoute:
+              return MaterialPageRoute(builder: (_) => const SignupPage());
+            case homeRoute:
+              return MaterialPageRoute(builder: (_) => const HomePage());
+            case eventsRoute:
+              return MaterialPageRoute(builder: (_) => const EventsPage());
+            case landingRoute:
+              return MaterialPageRoute(
+                builder: (_) => const _PlaceholderPage(
+                  title: 'Landing',
+                  message: 'Landing page wiring is in place. Build this screen when ready.',
+                ),
+              );
+            case timetablesRoute:
+              return MaterialPageRoute(
+                builder: (_) => const _PlaceholderPage(
+                  title: 'Timetable',
+                  message: 'Timetable page wiring is in place. Build this screen when ready.',
+                ),
+              );
+            case notificationsRoute:
+              return MaterialPageRoute(
+                builder: (_) => const _PlaceholderPage(
+                  title: 'Notifications',
+                  message: 'Notifications page wiring is in place. Build this screen when ready.',
+                ),
+              );
+            case profileRoute:
+              return MaterialPageRoute(
+                builder: (_) => const _PlaceholderPage(
+                  title: 'Profile',
+                  message: 'Profile page wiring is in place. Build this screen when ready.',
+                ),
+              );
+            case adminRoute:
+              return MaterialPageRoute(
+                builder: (_) => const _PlaceholderPage(
+                  title: 'Admin',
+                  message: 'Admin page wiring is in place. Build this screen when ready.',
+                ),
+              );
+            default:
+              return MaterialPageRoute(builder: (_) => const LoginPage());
+          }
+        },
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: colorScheme,
@@ -68,25 +129,28 @@ class CampusEventsApp extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) => const CampusEventsApp();
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Campus Events & Timetables',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.blueMirage,
-          primary: AppColors.blueMirage,
-          secondary: AppColors.amberSmoke,
-          background: AppColors.white,
+  }
+
+  class _PlaceholderPage extends StatelessWidget {
+    const _PlaceholderPage({required this.title, required this.message});
+
+    final String title;
+    final String message;
+
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(title: Text(title)),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
         ),
-        useMaterial3: true,
-        scaffoldBackgroundColor: AppColors.white,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.blueMirage,
-          foregroundColor: AppColors.white,
-          elevation: 0,
-        ),
-      ),
-      home: const HomePage(),
-    );
+      );
+    }
   }
