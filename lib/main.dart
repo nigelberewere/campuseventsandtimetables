@@ -127,14 +127,14 @@ class CampusEventsApp extends StatelessWidget {
             vertical: 16,
           ),
         ),
-        home: const LoginPage(),
-      );
-    }
+      ),
+    );
   }
- 
-  // Backwards-compatible wrapper for tests expecting `MyApp`.
-  class MyApp extends StatelessWidget {
-    const MyApp({super.key});
+}
+
+// Backwards-compatible wrapper for tests expecting `MyApp`.
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) => const CampusEventsApp();
