@@ -1,8 +1,10 @@
 import 'package:campuseventsandtimetables/pages/landing.dart';
 import 'package:flutter/material.dart';
+import 'pages/admin.dart';
 import 'pages/events.dart';
 import 'pages/home.dart';
 import 'pages/login.dart';
+import 'pages/notifications.dart';
 import 'pages/profile.dart';
 import 'pages/signup.dart';
 import 'pages/timetables.dart';
@@ -60,23 +62,11 @@ class CampusEventsApp extends StatelessWidget {
           case timetablesRoute:
             return MaterialPageRoute(builder: (_) => const TimetablesPage());
           case notificationsRoute:
-            return MaterialPageRoute(
-              builder: (_) => const _PlaceholderPage(
-                title: 'Notifications',
-                message:
-                    'Notifications page wiring is in place. Build this screen when ready.',
-              ),
-            );
+            return MaterialPageRoute(builder: (_) => const NotificationsPage());
           case profileRoute:
             return MaterialPageRoute(builder: (_) => const ProfilePage());
           case adminRoute:
-            return MaterialPageRoute(
-              builder: (_) => const _PlaceholderPage(
-                title: 'Admin',
-                message:
-                    'Admin page wiring is in place. Build this screen when ready.',
-              ),
-            );
+            return MaterialPageRoute(builder: (_) => const AdminPage());
           default:
             return MaterialPageRoute(builder: (_) => const LoginPage());
         }
@@ -122,28 +112,4 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => const CampusEventsApp();
-}
-
-class _PlaceholderPage extends StatelessWidget {
-  const _PlaceholderPage({required this.title, required this.message});
-
-  final String title;
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Text(
-            message,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-      ),
-    );
-  }
 }

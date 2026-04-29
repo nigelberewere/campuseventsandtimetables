@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import '../main.dart';
+import '../widgets/app_drawer.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -55,6 +57,17 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: AppColors.blueMirage),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
+      ),
+      drawer: AppDrawer(currentRoute: landingRoute),
       body: SingleChildScrollView(
         child: Column(
           children: [

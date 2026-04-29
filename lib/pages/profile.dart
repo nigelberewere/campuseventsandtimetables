@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import '../main.dart';
+import '../widgets/app_drawer.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -28,11 +30,14 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: AppColors.blueMirage,
         elevation: 0,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.white),
-          onPressed: () => Navigator.of(context).pop(),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: AppColors.white),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
       ),
+      drawer: AppDrawer(currentRoute: profileRoute),
       body: SingleChildScrollView(
         child: Column(
           children: [

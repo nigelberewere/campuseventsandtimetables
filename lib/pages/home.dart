@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import '../main.dart';
+import '../widgets/app_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,21 +26,8 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppColors.blueMirage,
         elevation: 0,
         centerTitle: true,
-        actions: [
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert, color: AppColors.white),
-            onSelected: (value) => _openRoute(context, value),
-            itemBuilder: (context) => const [
-              PopupMenuItem(value: '/events', child: Text('Events')),
-              PopupMenuItem(value: '/timetables', child: Text('Timetable')),
-              PopupMenuItem(value: '/notifications', child: Text('Notifications')),
-              PopupMenuItem(value: '/profile', child: Text('Profile')),
-              PopupMenuItem(value: '/admin', child: Text('Admin')),
-              PopupMenuItem(value: '/landing', child: Text('Landing')),
-            ],
-          ),
-        ],
       ),
+      drawer: AppDrawer(currentRoute: homeRoute),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -493,9 +482,5 @@ class _HomePageState extends State<HomePage> {
 
   void _navigateToSection(int index) {
     Navigator.of(context).pushNamed(index == 0 ? '/events' : '/timetables');
-  }
-
-  void _openRoute(BuildContext context, String routeName) {
-    Navigator.of(context).pushNamed(routeName);
   }
 }

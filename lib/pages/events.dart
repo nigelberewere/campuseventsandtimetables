@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import '../main.dart';
 import 'addEvent.dart';
+import '../widgets/app_drawer.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -97,23 +99,9 @@ class _EventsPageState extends State<EventsPage> {
               );
             },
           ),
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert, color: AppColors.white),
-            onSelected: (value) => _openRoute(value),
-            itemBuilder: (context) => const [
-              PopupMenuItem(value: '/home', child: Text('Home')),
-              PopupMenuItem(value: '/timetables', child: Text('Timetable')),
-              PopupMenuItem(
-                value: '/notifications',
-                child: Text('Notifications'),
-              ),
-              PopupMenuItem(value: '/profile', child: Text('Profile')),
-              PopupMenuItem(value: '/admin', child: Text('Admin')),
-              PopupMenuItem(value: '/landing', child: Text('Landing')),
-            ],
-          ),
         ],
       ),
+      drawer: AppDrawer(currentRoute: eventsRoute),
       body: Column(
         children: [
           Container(
@@ -208,6 +196,7 @@ class _EventsPageState extends State<EventsPage> {
             MaterialPageRoute(builder: (context) => const AddEventPage()),
           );
           if (newEvent != null && mounted) {
+            // ignore: use_build_context_synchronously
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
@@ -378,9 +367,5 @@ class _EventsPageState extends State<EventsPage> {
         ],
       ),
     );
-  }
-
-  void _openRoute(String routeName) {
-    Navigator.of(context).pushNamed(routeName);
   }
 }

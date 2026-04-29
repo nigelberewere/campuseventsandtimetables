@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import '../main.dart';
+import '../widgets/app_drawer.dart';
 
 class TimetablesPage extends StatefulWidget {
   const TimetablesPage({super.key});
@@ -172,17 +174,8 @@ class _TimetablesPageState extends State<TimetablesPage> {
         backgroundColor: AppColors.blueMirage,
         elevation: 0,
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.more_vert, color: AppColors.white),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('More options coming soon!')),
-              );
-            },
-          ),
-        ],
       ),
+      drawer: AppDrawer(currentRoute: timetablesRoute),
       body: SingleChildScrollView(
         child: Column(
           children: [
