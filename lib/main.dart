@@ -42,7 +42,7 @@ class CampusEventsApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'campuseventsandtimetables',
-      initialRoute: loginRoute,
+      initialRoute: landingRoute,
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case loginRoute:
@@ -54,13 +54,7 @@ class CampusEventsApp extends StatelessWidget {
           case eventsRoute:
             return MaterialPageRoute(builder: (_) => const EventsPage());
           case landingRoute:
-            return MaterialPageRoute(
-              builder: (_) => const _PlaceholderPage(
-                title: 'Landing',
-                message:
-                    'Landing page wiring is in place. Build this screen when ready.',
-              ),
-            );
+            return MaterialPageRoute(builder: (_) => const LandingPage());
           case timetablesRoute:
             return MaterialPageRoute(
               builder: (_) => const _PlaceholderPage(

@@ -4,15 +4,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:campuseventsandtimetables/main.dart';
 
 void main() {
-  testWidgets('starts on login page', (WidgetTester tester) async {
+  testWidgets('starts on landing page', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
 
-    expect(find.text('Sign In'), findsOneWidget);
-    expect(find.text('Campus Events & Timetables'), findsNothing);
+    expect(find.text('Campus Events &\nTimetables'), findsOneWidget);
+    expect(find.text('Get Started'), findsOneWidget);
   });
 
   testWidgets('valid sign in opens the home page', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
+
+    await tester.tap(find.text('Get Started'));
+    await tester.pumpAndSettle();
 
     await tester.enterText(
       find.widgetWithText(TextFormField, 'Student email'),

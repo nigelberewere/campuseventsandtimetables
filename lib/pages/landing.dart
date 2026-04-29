@@ -96,12 +96,7 @@ class _LandingPageState extends State<LandingPage> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            // TODO: Wire to login page
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Navigating to login...'),
-                              ),
-                            );
+                            Navigator.of(context).pushNamed('/login');
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.amberSmoke,
@@ -298,12 +293,7 @@ class _LandingPageState extends State<LandingPage> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            // TODO: Wire to signup page
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Navigating to signup...'),
-                              ),
-                            );
+                            Navigator.of(context).pushNamed('/signup');
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.amberSmoke,
@@ -325,12 +315,7 @@ class _LandingPageState extends State<LandingPage> {
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () {
-                            // TODO: Wire to login page
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Navigating to login...'),
-                              ),
-                            );
+                            Navigator.of(context).pushNamed('/login');
                           },
                           style: OutlinedButton.styleFrom(
                             side: const BorderSide(
