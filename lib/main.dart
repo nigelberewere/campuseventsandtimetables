@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'pages/events.dart';
 import 'pages/home.dart';
 import 'pages/login.dart';
+import 'pages/profile.dart';
 import 'pages/signup.dart';
 import 'pages/timetables.dart';
 import 'pages/addClass.dart';
@@ -71,13 +72,7 @@ class CampusEventsApp extends StatelessWidget {
               ),
             );
           case profileRoute:
-            return MaterialPageRoute(
-              builder: (_) => const _PlaceholderPage(
-                title: 'Profile',
-                message:
-                    'Profile page wiring is in place. Build this screen when ready.',
-              ),
-            );
+            return MaterialPageRoute(builder: (_) => const ProfilePage());
           case adminRoute:
             return MaterialPageRoute(
               builder: (_) => const _PlaceholderPage(
