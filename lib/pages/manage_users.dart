@@ -195,17 +195,6 @@ class _UserCard extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const Spacer(),
-              TextButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Edit user workflow coming soon.'),
-                    ),
-                  );
-                },
-                child: const Text('Edit'),
-              ),
             ],
           ),
         ],
