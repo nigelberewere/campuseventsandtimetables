@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import '../main.dart';
 
 class ManageNotificationsPage extends StatefulWidget {
   const ManageNotificationsPage({super.key});
 
   @override
-  State<ManageNotificationsPage> createState() => _ManageNotificationsPageState();
+  State<ManageNotificationsPage> createState() =>
+      _ManageNotificationsPageState();
 }
 
 class _ManageNotificationsPageState extends State<ManageNotificationsPage> {
@@ -71,10 +73,7 @@ class _ManageNotificationsPageState extends State<ManageNotificationsPage> {
                 SizedBox(height: 8),
                 Text(
                   'Turn channels on/off and manage templates before broadcasting notices.',
-                  style: TextStyle(
-                    color: AppColors.amberSmoke,
-                    height: 1.35,
-                  ),
+                  style: TextStyle(color: AppColors.amberSmoke, height: 1.35),
                 ),
               ],
             ),
@@ -172,13 +171,14 @@ class _ManageNotificationsPageState extends State<ManageNotificationsPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Broadcast composer coming soon.')),
-          );
+          Navigator.pushNamed(context, createBroadcastRoute);
         },
         backgroundColor: AppColors.blueMirage,
         icon: const Icon(Icons.send_rounded, color: AppColors.white),
-        label: const Text('Create Broadcast', style: TextStyle(color: AppColors.white)),
+        label: const Text(
+          'Create Broadcast',
+          style: TextStyle(color: AppColors.white),
+        ),
       ),
     );
   }
@@ -213,7 +213,10 @@ class _ManageNotificationsPageState extends State<ManageNotificationsPage> {
                 const SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: const TextStyle(fontSize: 12, color: AppColors.darkGray),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.darkGray,
+                  ),
                 ),
               ],
             ),

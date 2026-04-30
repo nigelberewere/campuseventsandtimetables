@@ -12,6 +12,7 @@ import 'pages/signup.dart';
 import 'pages/timetables.dart';
 import 'pages/addEvent.dart';
 import 'pages/addClass.dart';
+import 'pages/create_broadcast.dart';
 
 const String loginRoute = '/login';
 const String signupRoute = '/signup';
@@ -26,6 +27,7 @@ const String manageNotificationsRoute = '/manageNotifications';
 const String manageUsersRoute = '/manageUsers';
 const String profileRoute = '/profile';
 const String adminRoute = '/admin';
+const String createBroadcastRoute = '/createBroadcast';
 
 void main() {
   runApp(const CampusEventsApp());
@@ -85,6 +87,10 @@ class CampusEventsApp extends StatelessWidget {
             return MaterialPageRoute(builder: (_) => const ProfilePage());
           case adminRoute:
             return MaterialPageRoute(builder: (_) => const AdminPage());
+          case createBroadcastRoute:
+            return MaterialPageRoute(
+              builder: (_) => const CreateBroadcastPage(),
+            );
           default:
             return MaterialPageRoute(builder: (_) => const LoginPage());
         }
