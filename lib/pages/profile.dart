@@ -15,6 +15,77 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _emailDigest = true;
   bool _eventReminders = true;
 
+  // Edit mode state
+  bool _isEditing = false;
+
+  // User information state
+  String _name = 'Nigel Berewere';
+  String _studentId = 'CSC2024001';
+  String _email = 'n024212345@nust.students.ac.zw';
+  String _phone = '+263 700 000 000';
+  String _department = 'Faculty of Applied Science - Computer Science';
+  String _year = '2nd Year (2025/2026)';
+
+  // Controllers for text fields
+  late TextEditingController _nameController;
+  late TextEditingController _emailController;
+  late TextEditingController _phoneController;
+  late TextEditingController _departmentController;
+  late TextEditingController _yearController;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: _name);
+    _emailController = TextEditingController(text: _email);
+    _phoneController = TextEditingController(text: _phone);
+    _departmentController = TextEditingController(text: _department);
+    _yearController = TextEditingController(text: _year);
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _departmentController.dispose();
+    _yearController.dispose();
+    super.dispose();
+  }
+
+  void _toggleEditMode() {
+    setState(() {
+      if (_isEditing) {
+        // Save changes
+        _name = _nameController.text;
+        _email = _emailController.text;
+        _phone = _phoneController.text;
+        _department = _departmentController.text;
+        _year = _yearController.text;
+      } else {
+        // Reset controllers to current values
+        _nameController.text = _name;
+        _emailController.text = _email;
+        _phoneController.text = _phone;
+        _departmentController.text = _department;
+        _yearController.text = _year;
+      }
+      _isEditing = !_isEditing;
+    });
+  }
+
+  void _cancelEdit() {
+    setState(() {
+      // Reset controllers to original values
+      _nameController.text = _name;
+      _emailController.text = _email;
+      _phoneController.text = _phone;
+      _departmentController.text = _department;
+      _yearController.text = _year;
+      _isEditing = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,30 +149,67 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Nigel Berewere',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.white,
-                    ),
-                  ),
+                  _isEditing
+                      ? TextField(
+                          controller: _nameController,
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            filled: true,
+                            fillColor: AppColors.white,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          _name,
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.white,
+                          ),
+                        ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Student ID: CSC2024001',
-                    style: TextStyle(
+                  Text(
+                    'Student ID: $_studentId',
+                    style: const TextStyle(
                       fontSize: 14,
                       color: AppColors.amberSmoke,
                     ),
                   ),
                   const SizedBox(height: 4),
-                  const Text(
-                    'Computer Science',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.amberSmoke,
-                    ),
-                  ),
+                  _isEditing
+                      ? TextField(
+                          controller: _departmentController,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.amberSmoke,
+                          ),
+                          textAlign: TextAlign.center,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            filled: true,
+                            fillColor: AppColors.white,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          _department.split(' - ').last,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.amberSmoke,
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -123,25 +231,33 @@ class _ProfilePageState extends State<ProfilePage> {
                   _buildInfoCard(
                     icon: Icons.email_rounded,
                     label: 'Email',
-                    value: 'n024212345@nust.students.ac.zw',
+                    value: _email,
+                    controller: _emailController,
+                    isEditing: _isEditing,
                   ),
                   const SizedBox(height: 12),
                   _buildInfoCard(
                     icon: Icons.phone_rounded,
                     label: 'Phone',
-                    value: '+263 700 000 000',
+                    value: _phone,
+                    controller: _phoneController,
+                    isEditing: _isEditing,
                   ),
                   const SizedBox(height: 12),
                   _buildInfoCard(
                     icon: Icons.location_city_rounded,
                     label: 'Department',
-                    value: 'Faculty of Applied Science - Computer Science',
+                    value: _department,
+                    controller: _departmentController,
+                    isEditing: _isEditing,
                   ),
                   const SizedBox(height: 12),
                   _buildInfoCard(
                     icon: Icons.calendar_today_rounded,
                     label: 'Year',
-                    value: '2nd Year (2025/2026)',
+                    value: _year,
+                    controller: _yearController,
+                    isEditing: _isEditing,
                   ),
                   const SizedBox(height: 24),
                   Text(
@@ -185,47 +301,53 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                   ),
                   const SizedBox(height: 32),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton.tonalIcon(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Edit Profile feature coming soon!'),
-                            duration: Duration(seconds: 2),
+                  if (_isEditing) ...[
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: _cancelEdit,
+                            icon: const Icon(Icons.cancel_rounded),
+                            label: const Text('Cancel'),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: AppColors.blueMirage,
+                              side: const BorderSide(
+                                color: AppColors.blueMirage,
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                            ),
                           ),
-                        );
-                      },
-                      icon: const Icon(Icons.edit_rounded),
-                      label: const Text('Edit Profile'),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: AppColors.blueMirage,
-                        foregroundColor: AppColors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: FilledButton.icon(
+                            onPressed: _toggleEditMode,
+                            icon: const Icon(Icons.save_rounded),
+                            label: const Text('Save'),
+                            style: FilledButton.styleFrom(
+                              backgroundColor: AppColors.blueMirage,
+                              foregroundColor: AppColors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ] else ...[
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.tonalIcon(
+                        onPressed: _toggleEditMode,
+                        icon: const Icon(Icons.edit_rounded),
+                        label: const Text('Edit Profile'),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: AppColors.blueMirage,
+                          foregroundColor: AppColors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton.icon(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Change Password feature coming soon!'),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.lock_rounded),
-                      label: const Text('Change Password'),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.blueMirage,
-                        side: const BorderSide(color: AppColors.blueMirage),
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                      ),
-                    ),
-                  ),
+                  ],
                   const SizedBox(height: 32),
                   SizedBox(
                     width: double.infinity,
@@ -235,7 +357,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           context: context,
                           builder: (context) => AlertDialog(
                             title: const Text('Logout'),
-                            content: const Text('Are you sure you want to logout?'),
+                            content: const Text(
+                              'Are you sure you want to logout?',
+                            ),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(context),
@@ -290,6 +414,8 @@ class _ProfilePageState extends State<ProfilePage> {
     required IconData icon,
     required String label,
     required String value,
+    TextEditingController? controller,
+    bool isEditing = false,
   }) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -308,11 +434,7 @@ class _ProfilePageState extends State<ProfilePage> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Center(
-              child: Icon(
-                icon,
-                color: AppColors.blueMirage,
-                size: 24,
-              ),
+              child: Icon(icon, color: AppColors.blueMirage, size: 24),
             ),
           ),
           const SizedBox(width: 16),
@@ -329,16 +451,33 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  value,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.darkGray,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                isEditing && controller != null
+                    ? TextField(
+                        controller: controller,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: AppColors.darkGray,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          isDense: true,
+                        ),
+                      )
+                    : Text(
+                        value,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: AppColors.darkGray,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
               ],
             ),
           ),

@@ -115,16 +115,6 @@ class _ManageUsersPageState extends State<ManageUsersPage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Add user workflow coming soon.')),
-          );
-        },
-        backgroundColor: AppColors.blueMirage,
-        icon: const Icon(Icons.person_add_alt_1_rounded, color: AppColors.white),
-        label: const Text('Add User', style: TextStyle(color: AppColors.white)),
-      ),
     );
   }
 }
@@ -163,7 +153,10 @@ class _UserCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
                 decoration: BoxDecoration(
                   color: isActive
                       ? AppColors.success.withValues(alpha: 0.14)
@@ -182,11 +175,18 @@ class _UserCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Text(user['email'], style: const TextStyle(color: AppColors.darkGray)),
+          Text(
+            user['email'],
+            style: const TextStyle(color: AppColors.darkGray),
+          ),
           const SizedBox(height: 8),
           Row(
             children: [
-              const Icon(Icons.badge_rounded, size: 16, color: AppColors.blueMirage),
+              const Icon(
+                Icons.badge_rounded,
+                size: 16,
+                color: AppColors.blueMirage,
+              ),
               const SizedBox(width: 6),
               Text(
                 user['role'],
@@ -199,7 +199,9 @@ class _UserCard extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Edit user workflow coming soon.')),
+                    const SnackBar(
+                      content: Text('Edit user workflow coming soon.'),
+                    ),
                   );
                 },
                 child: const Text('Edit'),
