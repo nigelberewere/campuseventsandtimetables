@@ -13,7 +13,16 @@ class EventsPage extends StatefulWidget {
 
 class _EventsPageState extends State<EventsPage> {
   String _selectedFilter = 'All';
-  final List<String> _filters = ['All', 'Today', 'This Week', 'This Month'];
+  String _searchQuery = '';
+  // Swapped filters to Categories so they work immediately with your dummy data!
+  final List<String> _filters = [
+    'All',
+    'Academic',
+    'Sports',
+    'Career',
+    'Cultural',
+    'Workshop'
+  ];
 
   final List<Map<String, dynamic>> _events = [
     {
@@ -73,6 +82,37 @@ class _EventsPageState extends State<EventsPage> {
     },
   ];
 
+  // NEW: Getter to filter the list based on the selected chip and search query
+  List<Map<String, dynamic>> get _filteredEvents {
+    var filtered = _events;
+
+    // Filter by category
+    if (_selectedFilter != 'All') {
+      filtered = filtered
+          .where((event) => event['category'] == _selectedFilter)
+          .toList();
+    }
+
+    // Filter by search query
+    if (_searchQuery.isNotEmpty) {
+      filtered = filtered
+          .where((event) =>
+              event['title'].toLowerCase().contains(_searchQuery.toLowerCase()) ||
+              event['description']
+                  .toLowerCase()
+                  .contains(_searchQuery.toLowerCase()) ||
+              event['location']
+                  .toLowerCase()
+                  .contains(_searchQuery.toLowerCase()) ||
+              event['organizer']
+                  .toLowerCase()
+                  .contains(_searchQuery.toLowerCase()))
+          .toList();
+    }
+
+    return filtered;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,11 +132,7 @@ class _EventsPageState extends State<EventsPage> {
           IconButton(
             icon: const Icon(Icons.search, color: AppColors.white),
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Search functionality coming soon!'),
-                ),
-              );
+              _showSearchDialog();
             },
           ),
         ],
@@ -175,17 +211,39 @@ class _EventsPageState extends State<EventsPage> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: _events.length,
-              itemBuilder: (context, index) {
-                final event = _events[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: _buildEventCard(event),
-                );
-              },
-            ),
+            // NEW: Empty State Check & Using _filteredEvents
+            child: _filteredEvents.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.event_busy,
+                          size: 64,
+                          color: AppColors.dividerGray,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'No events found for $_selectedFilter',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: AppColors.darkGray,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: _filteredEvents.length,
+                    itemBuilder: (context, index) {
+                      final event = _filteredEvents[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: _buildEventCard(event),
+                      );
+                    },
+                  ),
           ),
         ],
       ),
@@ -196,19 +254,24 @@ class _EventsPageState extends State<EventsPage> {
             MaterialPageRoute(builder: (context) => const AddEventPage()),
           );
           if (newEvent != null && mounted) {
-            // ignore: use_build_context_synchronously
+            // NEW: Added setState to actually update the UI list!
+            setState(() {
+              _events.insert(0, newEvent);
+            });
+            
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
                   'Event "${newEvent['title']}" created successfully!',
                 ),
                 duration: const Duration(seconds: 2),
+                backgroundColor: AppColors.blueMirage,
               ),
             );
           }
         },
-        backgroundColor: AppColors.blueMirage,
-        child: const Icon(Icons.add, color: AppColors.white),
+        backgroundColor: AppColors.amberSmoke, // Changed to amber to pop against the blue
+        child: const Icon(Icons.add, color: AppColors.blueMirage),
       ),
     );
   }
@@ -316,6 +379,8 @@ class _EventsPageState extends State<EventsPage> {
               Text(
                 event['description'],
                 style: const TextStyle(fontSize: 14, height: 1.4),
+                maxLines: 2, // Keeps cards uniform, truncating long text
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
@@ -345,24 +410,105 @@ class _EventsPageState extends State<EventsPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(event['title']),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(
+          event['title'], 
+          style: const TextStyle(color: AppColors.blueMirage, fontWeight: FontWeight.bold)
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Date: ${event['date']}'),
-            Text('Time: ${event['time']}'),
-            Text('Location: ${event['location']}'),
-            Text('Organizer: ${event['organizer']}'),
-            Text('Attendees: ${event['attendees']}'),
-            const SizedBox(height: 12),
-            Text(event['description']),
+            _buildDetailRow(Icons.calendar_today, 'Date: ${event['date']}'),
+            const SizedBox(height: 8),
+            _buildDetailRow(Icons.access_time, 'Time: ${event['time']}'),
+            const SizedBox(height: 8),
+            _buildDetailRow(Icons.location_on, 'Location: ${event['location']}'),
+            const SizedBox(height: 8),
+            _buildDetailRow(Icons.person, 'Organizer: ${event['organizer']}'),
+            const SizedBox(height: 8),
+            _buildDetailRow(Icons.people, 'Attendees: ${event['attendees']}'),
+            const SizedBox(height: 16),
+            const Divider(),
+            const SizedBox(height: 8),
+            Text(event['description'], style: const TextStyle(height: 1.4)),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+            child: const Text('Close', style: TextStyle(color: AppColors.blueMirage)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Helper widget for clean dialog rows
+  Widget _buildDetailRow(IconData icon, String text) {
+    return Row(
+      children: [
+        Icon(icon, size: 16, color: AppColors.blueMirage),
+        const SizedBox(width: 8),
+        Expanded(child: Text(text, style: const TextStyle(fontSize: 14))),
+      ],
+    );
+  }
+
+  void _showSearchDialog() {
+    final TextEditingController searchController =
+        TextEditingController(text: _searchQuery);
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          'Search Events',
+          style: TextStyle(
+            color: AppColors.blueMirage,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: TextField(
+          controller: searchController,
+          decoration: InputDecoration(
+            hintText: 'Search by title, location, organizer...',
+            prefixIcon: const Icon(Icons.search, color: AppColors.blueMirage),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide:
+                  const BorderSide(color: AppColors.blueMirage, width: 2),
+            ),
+          ),
+          onChanged: (value) {
+            setState(() {
+              _searchQuery = value;
+            });
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _searchQuery = '';
+              });
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'Clear',
+              style: TextStyle(color: AppColors.blueMirage),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              'Close',
+              style: TextStyle(color: AppColors.blueMirage),
+            ),
           ),
         ],
       ),
