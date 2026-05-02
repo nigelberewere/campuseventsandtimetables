@@ -21,7 +21,7 @@ class _EventsPageState extends State<EventsPage> {
     'Sports',
     'Career',
     'Cultural',
-    'Workshop'
+    'Workshop',
   ];
 
   final List<Map<String, dynamic>> _events = [
@@ -96,17 +96,21 @@ class _EventsPageState extends State<EventsPage> {
     // Filter by search query
     if (_searchQuery.isNotEmpty) {
       filtered = filtered
-          .where((event) =>
-              event['title'].toLowerCase().contains(_searchQuery.toLowerCase()) ||
-              event['description']
-                  .toLowerCase()
-                  .contains(_searchQuery.toLowerCase()) ||
-              event['location']
-                  .toLowerCase()
-                  .contains(_searchQuery.toLowerCase()) ||
-              event['organizer']
-                  .toLowerCase()
-                  .contains(_searchQuery.toLowerCase()))
+          .where(
+            (event) =>
+                event['title'].toLowerCase().contains(
+                  _searchQuery.toLowerCase(),
+                ) ||
+                event['description'].toLowerCase().contains(
+                  _searchQuery.toLowerCase(),
+                ) ||
+                event['location'].toLowerCase().contains(
+                  _searchQuery.toLowerCase(),
+                ) ||
+                event['organizer'].toLowerCase().contains(
+                  _searchQuery.toLowerCase(),
+                ),
+          )
           .toList();
     }
 
@@ -258,7 +262,7 @@ class _EventsPageState extends State<EventsPage> {
             setState(() {
               _events.insert(0, newEvent);
             });
-            
+
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
@@ -270,7 +274,8 @@ class _EventsPageState extends State<EventsPage> {
             );
           }
         },
-        backgroundColor: AppColors.amberSmoke, // Changed to amber to pop against the blue
+        backgroundColor:
+            AppColors.amberSmoke, // Changed to amber to pop against the blue
         child: const Icon(Icons.add, color: AppColors.blueMirage),
       ),
     );
@@ -412,8 +417,11 @@ class _EventsPageState extends State<EventsPage> {
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
-          event['title'], 
-          style: const TextStyle(color: AppColors.blueMirage, fontWeight: FontWeight.bold)
+          event['title'],
+          style: const TextStyle(
+            color: AppColors.blueMirage,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -423,7 +431,10 @@ class _EventsPageState extends State<EventsPage> {
             const SizedBox(height: 8),
             _buildDetailRow(Icons.access_time, 'Time: ${event['time']}'),
             const SizedBox(height: 8),
-            _buildDetailRow(Icons.location_on, 'Location: ${event['location']}'),
+            _buildDetailRow(
+              Icons.location_on,
+              'Location: ${event['location']}',
+            ),
             const SizedBox(height: 8),
             _buildDetailRow(Icons.person, 'Organizer: ${event['organizer']}'),
             const SizedBox(height: 8),
@@ -437,7 +448,10 @@ class _EventsPageState extends State<EventsPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close', style: TextStyle(color: AppColors.blueMirage)),
+            child: const Text(
+              'Close',
+              style: TextStyle(color: AppColors.blueMirage),
+            ),
           ),
         ],
       ),
@@ -456,8 +470,9 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   void _showSearchDialog() {
-    final TextEditingController searchController =
-        TextEditingController(text: _searchQuery);
+    final TextEditingController searchController = TextEditingController(
+      text: _searchQuery,
+    );
 
     showDialog(
       context: context,
@@ -475,13 +490,13 @@ class _EventsPageState extends State<EventsPage> {
           decoration: InputDecoration(
             hintText: 'Search by title, location, organizer...',
             prefixIcon: const Icon(Icons.search, color: AppColors.blueMirage),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide:
-                  const BorderSide(color: AppColors.blueMirage, width: 2),
+              borderSide: const BorderSide(
+                color: AppColors.blueMirage,
+                width: 2,
+              ),
             ),
           ),
           onChanged: (value) {
