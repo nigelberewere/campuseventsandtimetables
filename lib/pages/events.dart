@@ -188,10 +188,16 @@ class _EventsPageState extends State<EventsPage> {
                   },
                   decoration: InputDecoration(
                     hintText: 'Search by title, location, organizer...',
-                    prefixIcon: const Icon(Icons.search, color: AppColors.blueMirage),
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: AppColors.blueMirage,
+                    ),
                     suffixIcon: _searchQuery.isNotEmpty
                         ? IconButton(
-                            icon: const Icon(Icons.clear, color: AppColors.blueMirage),
+                            icon: const Icon(
+                              Icons.clear,
+                              color: AppColors.blueMirage,
+                            ),
                             onPressed: () {
                               setState(() {
                                 _searchQuery = '';
@@ -202,8 +208,13 @@ class _EventsPageState extends State<EventsPage> {
                         : null,
                     filled: true,
                     fillColor: AppColors.white,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
                   ),
                 ),
                 if (_searchQuery.isNotEmpty) ...[
@@ -211,9 +222,9 @@ class _EventsPageState extends State<EventsPage> {
                   Text(
                     'Showing ${_filteredEvents.length} result${_filteredEvents.length == 1 ? '' : 's'} for "$_searchQuery"',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.amberSmoke,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      color: AppColors.amberSmoke,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ],
                 const SizedBox(height: 16),
@@ -277,8 +288,8 @@ class _EventsPageState extends State<EventsPage> {
                           _searchQuery.isNotEmpty
                               ? 'No events match "$_searchQuery"'
                               : _selectedFilter != 'All'
-                                  ? 'No events found in $_selectedFilter'
-                                  : 'No available events found',
+                              ? 'No events found in $_selectedFilter'
+                              : 'No available events found',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 18,
