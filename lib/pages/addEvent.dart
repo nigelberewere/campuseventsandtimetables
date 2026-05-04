@@ -62,6 +62,18 @@ class _AddEventPageState extends State<AddEventPage> {
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2027),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.blueMirage, 
+              onPrimary: AppColors.white, 
+              onSurface: AppColors.darkGray,
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
     if (pickedDate != null) {
       setState(() {
@@ -77,6 +89,16 @@ class _AddEventPageState extends State<AddEventPage> {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.blueMirage, 
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
     if (pickedTime != null) {
       setState(() {
@@ -87,18 +109,8 @@ class _AddEventPageState extends State<AddEventPage> {
 
   String _formatDate(DateTime date) {
     const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
     ];
     return '${months[date.month - 1]} ${date.day}, ${date.year}';
   }
@@ -191,7 +203,7 @@ class _AddEventPageState extends State<AddEventPage> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
 
                 // Date Section
                 Text(
@@ -217,31 +229,37 @@ class _AddEventPageState extends State<AddEventPage> {
                 ),
                 const SizedBox(height: 12),
 
-                // Start Time
-                _buildTimeField(
-                  controller: _startTimeController,
-                  label: 'Start Time',
-                  onTap: () => _selectTime(context, _startTimeController),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please select start time';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 12),
-
-                // End Time
-                _buildTimeField(
-                  controller: _endTimeController,
-                  label: 'End Time',
-                  onTap: () => _selectTime(context, _endTimeController),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please select end time';
-                    }
-                    return null;
-                  },
+                // Time Row (Start and End side-by-side)
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildTimeField(
+                        controller: _startTimeController,
+                        label: 'Start Time',
+                        onTap: () => _selectTime(context, _startTimeController),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Required';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: _buildTimeField(
+                        controller: _endTimeController,
+                        label: 'End Time',
+                        onTap: () => _selectTime(context, _endTimeController),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Required';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 24),
 
@@ -301,7 +319,8 @@ class _AddEventPageState extends State<AddEventPage> {
                   label: 'Expected Attendees',
                   hint: 'e.g., 150',
                   prefixIcon: Icons.people_outline,
-                  keyboardType: TextInputType.number,
+                  // NEW: Ensures a clean number pad on both iOS and Android
+                  keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter expected attendees';
@@ -345,7 +364,7 @@ class _AddEventPageState extends State<AddEventPage> {
                       child: ElevatedButton(
                         onPressed: _submitForm,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.blueMirage,
+                          backgroundColor: AppColors.amberSmoke, // Matches the new FAB color
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -354,7 +373,7 @@ class _AddEventPageState extends State<AddEventPage> {
                         child: const Text(
                           'Create Event',
                           style: TextStyle(
-                            color: AppColors.white,
+                            color: AppColors.blueMirage,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),

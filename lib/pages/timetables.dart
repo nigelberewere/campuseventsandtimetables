@@ -12,6 +12,7 @@ class TimetablesPage extends StatefulWidget {
 
 class _TimetablesPageState extends State<TimetablesPage> {
   late DateTime _currentWeekStart;
+  late DateTime _selectedDate;
   String _selectedView = 'Week'; // 'Week' or 'Day'
 
   final List<Map<String, dynamic>> _classes = [
@@ -129,6 +130,7 @@ class _TimetablesPageState extends State<TimetablesPage> {
   void initState() {
     super.initState();
     _currentWeekStart = _getMonday(DateTime.now());
+    _selectedDate = DateTime.now();
   }
 
   DateTime _getMonday(DateTime date) {
@@ -285,6 +287,9 @@ class _TimetablesPageState extends State<TimetablesPage> {
               ),
             ),
 
+            // Calendar Strip
+            _buildCalendarStrip(),
+
             // Content View
             if (_selectedView == 'Week') _buildWeekView() else _buildDayView(),
 
@@ -302,6 +307,106 @@ class _TimetablesPageState extends State<TimetablesPage> {
         },
         backgroundColor: AppColors.blueMirage,
         child: const Icon(Icons.add, color: AppColors.white),
+      ),
+    );
+  }
+
+  Widget _buildCalendarStrip() {
+    final weekDays = List.generate(
+      7,
+      (index) => _currentWeekStart.add(Duration(days: index)),
+    );
+
+    const weekdayShortNames = [
+      'Mon',
+      'Tue',
+      'Wed',
+      'Thu',
+      'Fri',
+      'Sat',
+      'Sun',
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Calendar',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.blueMirage,
+                ),
+              ),
+              Text(
+                _formatDate(_selectedDate),
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: AppColors.darkGray,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: weekDays.map((date) {
+                final isSelected = date.year == _selectedDate.year &&
+                    date.month == _selectedDate.month &&
+                    date.day == _selectedDate.day;
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _selectedDate = date;
+                    });
+                  },
+                  child: Container(
+                    width: 70,
+                    margin: const EdgeInsets.only(right: 10),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isSelected ? AppColors.blueMirage : AppColors.lightGray,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: isSelected ? AppColors.blueMirage : AppColors.dividerGray,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          weekdayShortNames[date.weekday - 1],
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: isSelected ? AppColors.white : AppColors.darkGray,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          '${date.day}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: isSelected ? AppColors.white : AppColors.darkGray,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
       ),
     );
   }

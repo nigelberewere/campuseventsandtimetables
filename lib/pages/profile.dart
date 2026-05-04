@@ -20,7 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // User information state
   String _name = 'Nigel Berewere';
-  String _studentId = 'CSC2024001';
+  final String _studentId = 'CSC2024001';
   String _email = 'n024212345@nust.students.ac.zw';
   String _phone = '+263 700 000 000';
   String _department = 'Faculty of Applied Science - Computer Science';

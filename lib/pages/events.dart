@@ -503,6 +503,80 @@ class _EventsPageState extends State<EventsPage> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(
+          event['title'],
+          style: const TextStyle(
+            color: AppColors.blueMirage,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildDetailRow(Icons.calendar_today, 'Date: ${event['date']}'),
+            const SizedBox(height: 8),
+            _buildDetailRow(Icons.access_time, 'Time: ${event['time']}'),
+            const SizedBox(height: 8),
+            _buildDetailRow(
+              Icons.location_on,
+              'Location: ${event['location']}',
+            ),
+            const SizedBox(height: 8),
+            _buildDetailRow(Icons.person, 'Organizer: ${event['organizer']}'),
+            const SizedBox(height: 8),
+            _buildDetailRow(Icons.people, 'Attendees: ${event['attendees']}'),
+            const SizedBox(height: 16),
+            const Divider(),
+            const SizedBox(height: 8),
+            Text(event['description'], style: const TextStyle(height: 1.4)),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _searchQuery = '';
+              });
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'Clear',
+              style: TextStyle(color: AppColors.blueMirage),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              'Close',
+              style: TextStyle(color: AppColors.blueMirage),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Helper widget for clean dialog rows
+  Widget _buildDetailRow(IconData icon, String text) {
+    return Row(
+      children: [
+        Icon(icon, size: 16, color: AppColors.blueMirage),
+        const SizedBox(width: 8),
+        Expanded(child: Text(text, style: const TextStyle(fontSize: 14))),
+      ],
+    );
+  }
+
+  void _showSearchDialog() {
+    final TextEditingController searchController = TextEditingController(
+      text: _searchQuery,
+    );
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text(
           'Search Events',
           style: TextStyle(

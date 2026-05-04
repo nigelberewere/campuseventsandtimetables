@@ -138,7 +138,7 @@ class _AddClassPageState extends State<AddClassPage> {
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                value: _selectedDay,
+                initialValue: _selectedDay,
                 decoration: const InputDecoration(
                   labelText: 'Day',
                   prefixIcon: Icon(Icons.calendar_today),
