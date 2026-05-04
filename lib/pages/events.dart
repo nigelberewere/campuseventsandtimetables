@@ -3,6 +3,7 @@ import '../constants/app_colors.dart';
 import '../main.dart';
 import 'addEvent.dart';
 import '../widgets/app_drawer.dart';
+import 'event_details_page.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -474,6 +475,30 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   void _showEventDetails(Map<String, dynamic> event) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EventDetailsPage(event: event),
+      ),
+    );
+  }
+
+  // Helper widget for clean dialog rows
+  Widget _buildDetailRow(IconData icon, String text) {
+    return Row(
+      children: [
+        Icon(icon, size: 16, color: AppColors.blueMirage),
+        const SizedBox(width: 8),
+        Expanded(child: Text(text, style: const TextStyle(fontSize: 14))),
+      ],
+    );
+  }
+
+  void _showSearchDialog() {
+    final TextEditingController searchController = TextEditingController(
+      text: _searchQuery,
+    );
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -508,6 +533,18 @@ class _EventsPageState extends State<EventsPage> {
           ],
         ),
         actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _searchQuery = '';
+              });
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'Clear',
+              style: TextStyle(color: AppColors.blueMirage),
+            ),
+          ),
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text(
