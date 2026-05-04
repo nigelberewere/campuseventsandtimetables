@@ -4,6 +4,9 @@ class NotificationService {
   static final FlutterLocalNotificationsPlugin notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
+  
+  static bool pushEnabled = true;
+
   static Future init() async {
     const AndroidInitializationSettings androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -15,6 +18,9 @@ class NotificationService {
   }
 
   static Future showNotification(String title, String body) async {
+    
+    if (!pushEnabled) return;
+
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
       'channel_id',
@@ -28,4 +34,9 @@ class NotificationService {
 
     await notificationsPlugin.show(0, title, body, details);
   }
-} 
+
+
+  static void setPushEnabled(bool value) {
+    pushEnabled = value;
+  }
+}
