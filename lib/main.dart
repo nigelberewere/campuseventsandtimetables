@@ -16,6 +16,7 @@ import 'pages/add_event.dart';
 import 'pages/add_class.dart';
 import 'pages/firebase_test.dart';
 import 'pages/create_broadcast.dart';
+import 'services/notification_service.dart';
 
 const String loginRoute = '/login';
 const String signupRoute = '/signup';
