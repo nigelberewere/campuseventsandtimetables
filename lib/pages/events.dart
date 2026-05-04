@@ -3,6 +3,7 @@ import '../constants/app_colors.dart';
 import '../main.dart';
 import 'add_event.dart';
 import '../widgets/app_drawer.dart';
+import 'event_details_page.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -14,6 +15,8 @@ class EventsPage extends StatefulWidget {
 class _EventsPageState extends State<EventsPage> {
   String _selectedFilter = 'All';
   String _searchQuery = '';
+  final TextEditingController _searchController = TextEditingController();
+
   // Swapped filters to Categories so they work immediately with your dummy data!
   final List<String> _filters = [
     'All',
@@ -118,6 +121,12 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -170,6 +179,55 @@ class _EventsPageState extends State<EventsPage> {
                     context,
                   ).textTheme.bodyMedium?.copyWith(color: AppColors.amberSmoke),
                 ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _searchController,
+                  onChanged: (value) {
+                    setState(() {
+                      _searchQuery = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Search by title, location, organizer...',
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: AppColors.blueMirage,
+                    ),
+                    suffixIcon: _searchQuery.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(
+                              Icons.clear,
+                              color: AppColors.blueMirage,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _searchQuery = '';
+                                _searchController.clear();
+                              });
+                            },
+                          )
+                        : null,
+                    filled: true,
+                    fillColor: AppColors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
+                  ),
+                ),
+                if (_searchQuery.isNotEmpty) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    'Showing ${_filteredEvents.length} result${_filteredEvents.length == 1 ? '' : 's'} for "$_searchQuery"',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.amberSmoke,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 16),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -228,7 +286,12 @@ class _EventsPageState extends State<EventsPage> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'No events found for $_selectedFilter',
+                          _searchQuery.isNotEmpty
+                              ? 'No events match "$_searchQuery"'
+                              : _selectedFilter != 'All'
+                              ? 'No events found in $_selectedFilter'
+                              : 'No available events found',
+                          textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 18,
                             color: AppColors.darkGray,
@@ -412,6 +475,30 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   void _showEventDetails(Map<String, dynamic> event) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EventDetailsPage(event: event),
+      ),
+    );
+  }
+
+  // Helper widget for clean dialog rows
+  Widget _buildDetailRow(IconData icon, String text) {
+    return Row(
+      children: [
+        Icon(icon, size: 16, color: AppColors.blueMirage),
+        const SizedBox(width: 8),
+        Expanded(child: Text(text, style: const TextStyle(fontSize: 14))),
+      ],
+    );
+  }
+
+  void _showSearchDialog() {
+    final TextEditingController searchController = TextEditingController(
+      text: _searchQuery,
+    );
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -446,6 +533,18 @@ class _EventsPageState extends State<EventsPage> {
           ],
         ),
         actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _searchQuery = '';
+              });
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'Clear',
+              style: TextStyle(color: AppColors.blueMirage),
+            ),
+          ),
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text(
