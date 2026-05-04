@@ -13,6 +13,7 @@ import 'pages/timetables.dart';
 import 'pages/addEvent.dart';
 import 'pages/addClass.dart';
 import 'pages/create_broadcast.dart';
+import 'services/notification_service.dart';
 
 const String loginRoute = '/login';
 const String signupRoute = '/signup';
@@ -29,7 +30,9 @@ const String profileRoute = '/profile';
 const String adminRoute = '/admin';
 const String createBroadcastRoute = '/createBroadcast';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.init();
   runApp(const CampusEventsApp());
 }
 
