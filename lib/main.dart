@@ -1,5 +1,7 @@
 import 'package:campuseventsandtimetables/pages/landing.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'pages/admin.dart';
 import 'pages/events.dart';
 import 'pages/home.dart';
@@ -10,8 +12,9 @@ import 'pages/notifications.dart';
 import 'pages/profile.dart';
 import 'pages/signup.dart';
 import 'pages/timetables.dart';
-import 'pages/addEvent.dart';
-import 'pages/addClass.dart';
+import 'pages/add_event.dart';
+import 'pages/add_class.dart';
+import 'pages/firebase_test.dart';
 import 'pages/create_broadcast.dart';
 import 'services/notification_service.dart';
 
@@ -29,10 +32,13 @@ const String manageUsersRoute = '/manageUsers';
 const String profileRoute = '/profile';
 const String adminRoute = '/admin';
 const String createBroadcastRoute = '/createBroadcast';
+const String firebaseTestRoute = '/firebaseTest';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService.init();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const CampusEventsApp());
 }
 
@@ -93,6 +99,10 @@ class CampusEventsApp extends StatelessWidget {
           case createBroadcastRoute:
             return MaterialPageRoute(
               builder: (_) => const CreateBroadcastPage(),
+            );
+          case firebaseTestRoute:
+            return MaterialPageRoute(
+              builder: (_) => const FirebaseTestPage(),
             );
           default:
             return MaterialPageRoute(builder: (_) => const LoginPage());

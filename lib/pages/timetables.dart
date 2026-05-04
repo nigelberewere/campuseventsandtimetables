@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../main.dart';
 import '../widgets/app_drawer.dart';
+import '../services/firebase_classes_service.dart';
 
 class TimetablesPage extends StatefulWidget {
   const TimetablesPage({super.key});
@@ -14,8 +15,13 @@ class _TimetablesPageState extends State<TimetablesPage> {
   late DateTime _currentWeekStart;
   late DateTime _selectedDate;
   String _selectedView = 'Week'; // 'Week' or 'Day'
+  
+  final FirebaseClassesService _firebaseService = FirebaseClassesService();
+  List<Map<String, dynamic>> _classes = [];
+  bool _isLoading = true;
+  final String _userId = 'user_1'; // TODO: Replace with actual authenticated user ID
 
-  final List<Map<String, dynamic>> _classes = [
+  final List<Map<String, dynamic>> _defaultClasses = [
     {
       'subject': 'Mathematics',
       'instructor': 'Dr. Smith',
@@ -131,6 +137,23 @@ class _TimetablesPageState extends State<TimetablesPage> {
     super.initState();
     _currentWeekStart = _getMonday(DateTime.now());
     _selectedDate = DateTime.now();
+    _loadClassesFromFirebase();
+  }
+
+  Future<void> _loadClassesFromFirebase() async {
+    try {
+      final classes = await _firebaseService.getClasses(_userId);
+      setState(() {
+        _classes = classes.isEmpty ? _defaultClasses : classes;
+        _isLoading = false;
+      });
+    } catch (e) {
+      debugPrint('Error loading classes: $e');
+      setState(() {
+        _classes = _defaultClasses;
+        _isLoading = false;
+      });
+    }
   }
 
   DateTime _getMonday(DateTime date) {
@@ -163,6 +186,27 @@ class _TimetablesPageState extends State<TimetablesPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'My Timetable',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: AppColors.white,
+            ),
+          ),
+          backgroundColor: AppColors.blueMirage,
+          elevation: 0,
+          centerTitle: true,
+        ),
+        body: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -303,7 +347,10 @@ class _TimetablesPageState extends State<TimetablesPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/addClass');
+          Navigator.pushNamed(context, '/addClass').then((_) {
+            // Reload classes after adding a new one
+            _loadClassesFromFirebase();
+          });
         },
         backgroundColor: AppColors.blueMirage,
         child: const Icon(Icons.add, color: AppColors.white),

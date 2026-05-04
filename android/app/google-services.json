@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "820364335620",
+    "project_id": "campuseventsandtimetable-396e5",
+    "storage_bucket": "campuseventsandtimetable-396e5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820364335620:android:09c098180624f9f5777351",
+        "android_client_info": {
+          "package_name": "com.group2.campuseventsandtimetables"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBshBZZUV5BkVH5T6xhR7zoD_qYAltvvhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
