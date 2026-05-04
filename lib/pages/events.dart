@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../main.dart';
-import 'addEvent.dart';
+import 'add_event.dart';
 import '../widgets/app_drawer.dart';
 
 class EventsPage extends StatefulWidget {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import '../services/firebase_classes_service.dart';
 
 class AddClassPage extends StatefulWidget {
   const AddClassPage({super.key});
@@ -17,6 +18,10 @@ class _AddClassPageState extends State<AddClassPage> {
   TimeOfDay _startTime = const TimeOfDay(hour: 9, minute: 0);
   TimeOfDay _endTime = const TimeOfDay(hour: 10, minute: 30);
   int _credits = 3;
+  bool _isLoading = false;
+  
+  final FirebaseClassesService _firebaseService = FirebaseClassesService();
+  final String _userId = 'user_1'; // TODO: Replace with actual authenticated user ID
 
   final List<String> _days = [
     'Monday',
@@ -220,15 +225,58 @@ class _AddClassPageState extends State<AddClassPage> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Logic to save the class would go here
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Class added successfully!')),
-                      );
-                      Navigator.pop(context);
-                    }
-                  },
+                  onPressed: _isLoading
+                      ? null
+                      : () async {
+                          if (_formKey.currentState!.validate()) {
+                            setState(() {
+                              _isLoading = true;
+                            });
+
+                            try {
+                              // Prepare class data
+                              final classData = {
+                                'subject': _subjectController.text,
+                                'instructor': _instructorController.text,
+                                'room': _roomController.text,
+                                'day': _selectedDay,
+                                'startTime': _startTime.format(context),
+                                'endTime': _endTime.format(context),
+                                'credits': _credits,
+                                'color': 0xFF5E88B0, // Default color
+                                'userId': _userId,
+                              };
+
+                              // Save to Firebase
+                              await _firebaseService.addClass(classData);
+
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Class added successfully!'),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                                Navigator.pop(context);
+                              }
+                            } catch (e) {
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Error: $e'),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              }
+                            } finally {
+                              if (mounted) {
+                                setState(() {
+                                  _isLoading = false;
+                                });
+                              }
+                            }
+                          }
+                        },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.blueMirage,
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -236,14 +284,23 @@ class _AddClassPageState extends State<AddClassPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text(
-                    'Save Class',
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: _isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(AppColors.white),
+                          ),
+                        )
+                      : const Text(
+                          'Save Class',
+                          style: TextStyle(
+                            color: AppColors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(height: 20),
